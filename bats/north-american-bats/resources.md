@@ -35,13 +35,116 @@ Page for account request - login is currently off line
 
 Nabat Graphiql (created and originally written by Derek Williams, using PostGraphile for the heavy lifting)
 
-Note, the API has been changed to be very non-cononical (in a data and graphql) since it's original creation.  For example the visualization example query below includes information about visualization, e.g. chart, which should not be in the data API.  As a consequence of other chages the API is also now very slow.  This is likely due to the nature of the code being developed by outside contractors at the USGS.  It is likley that a separate project may be started by Derek Williams to provide a more useful, efficient, and faster API.
+Note, the API has been changed to be very non-cononical (in a data and graphql) since it's original creation.  For example the visualization example query below includes information about visualization, e.g. chart, which should not be in the data API.  As a consequence of other chages the API is also now very slow.
+
+So don't use the API heavily!
+
+It is possible that a separate project may be started by Derek Williams to provide a more useful, efficient, and faster API.  See NaBatSchema.json for the full schema.
 
 https://api.sciencebase.gov/nabat-graphql/graphiql
 
 Nabat Graphql endpoint
 
 https://api.sciencebase.gov/nabat-graphql/graphql
+
+https://sciencebase.usgs.gov/nabat/#/data/inventory
+
+Example queries
+
+```
+query {
+  allSpecies(first: 100) {
+    nodes {
+      speciesCode
+      
+    }
+  }
+}
+```
+
+```
+query {
+  allVwPublicSelectedForSurveys(first: 100) {
+    nodes {
+      grtsCellId
+      geom4326 {
+        geojson
+      }
+    }
+  }
+}
+```
+
+```
+query {
+  allCqlKeys(first: 100) {
+    nodes {
+      cqlGrtsKeysByKey (first: 10) {
+        nodes {
+          grtsId
+        }
+      }
+    }
+  }
+}
+```
+
+```query {
+  allMvwPublicMonthlyRecordCounts (first: 10, filter : {organizationId: {equalTo:3}}) {
+    nodes {
+      organizationId
+      surveyTypeId
+      dateMo
+      eventCt
+      valueCt
+    }
+  }
+}
+```
+
+```{
+  query {
+    fnPublicSearchFeatureText (first: 10) {
+      totalCount
+      nodes {
+        grtsCount
+        searchText
+        type
+        id
+        name
+        description
+      }
+    }
+  }
+}
+```
+
+```{
+  query {
+    fnPublicGetSurveyExtent(first: 1000) {
+      totalCount
+      nodes {
+        stationaryCount
+        mobileCount
+      }
+    }
+  }
+}```
+
+```{
+  query {
+    fnPublicGetProjectByGrtsId (_grtsids : 34343) {
+      nodes {
+        sampleFrameId
+        
+      }
+    }
+  }
+}
+```
+
+
+
 
 Visualization example query:
 
